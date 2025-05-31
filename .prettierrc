@@ -11,6 +11,15 @@
 	"importOrderSortSpecifiers": true,
 	"importOrderCaseInsensitive": true,
 	"importOrderParserPlugins": ["classProperties", "decorators-legacy", "typescript"],
-	"importOrder": ["<THIRD_PARTY_MODULES>", "^@/(.*)$", "^../(.*)", "^./(.*)"],
+	"importOrder": [
+		"<THIRD_PARTY_MODULES>",
+		"^@/prisma/generated",
+		"^@/infra/(.*)",
+		"^@/configs/(.*)",
+		"^@/api/(.*)",
+		"^@/(.*)$",
+		"^../(.*)",
+		"^./(.*)"
+	],
 	"plugins": ["@trivago/prettier-plugin-sort-imports"]
 }

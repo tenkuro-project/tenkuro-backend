@@ -1,6 +1,7 @@
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import * as cookieParser from 'cookie-parser';
 
 import { AppModule } from './app.module';
 import { getCorsConfig } from './configs/cors.config';
@@ -12,8 +13,10 @@ async function bootstrap(): Promise<void> {
 
 	const globalPrefix = 'api/v1';
 	app.setGlobalPrefix(globalPrefix);
-
+	app.use(cookieParser());
 	app.enableCors(getCorsConfig(configService));
+
+	app.useGlobalPipes(new ValidationPipe());
 
 	const port = configService.get<number>('PORT', 4000);
 	const url = `http://localhost:${port}/${globalPrefix}`;
