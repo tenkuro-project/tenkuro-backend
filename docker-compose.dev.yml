@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: tenkuro-postgres
+    image: postgres:latest
+    restart: always
+    environment:
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+        - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - tenkuro-postgres_data:/var/lib/postgresql/data
+    networks:
+      - tenkuro-backend
+    ports:
+      - "5432:5432"
+
+  adminer:
+    container_name: tenkuro-adminer
+    image: adminer:latest
+    restart: always
+    depends_on:
+      - postgres
+    networks:
+      - tenkuro-backend
+    ports:
+      - "8080:8080"
+
+volumes:
+  tenkuro-postgres_data:
+
+networks:
+  tenkuro-backend:
