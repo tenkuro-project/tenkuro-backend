@@ -1,0 +1,18 @@
+model User {
+    id String @id @default(uuid())
+
+    email    String @unique
+    password String
+
+    role Role @default(USER)
+
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+}
+
+enum Role {
+    USER
+    EDITOR
+    MODERATOR
+    ADMIN
+}
