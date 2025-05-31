@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 
 services:
   postgres:
@@ -6,29 +6,31 @@ services:
     image: postgres:latest
     restart: always
     environment:
-        - POSTGRES_USER=${POSTGRES_USER}
-        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-        - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - tenkuro-postgres_data:/var/lib/postgresql/data
     networks:
       - tenkuro-backend
     ports:
-      - "5432:5432"
+      - '5432:5432'
 
-  adminer:
-    container_name: tenkuro-adminer
-    image: adminer:latest
+  redis:
+    container_name: tenkuro-redis
+    image: redis:latest
     restart: always
-    depends_on:
-      - postgres
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    ports:
+      - 6379:6379
+    volumes:
+      - tenkuro-redis_data:/data
     networks:
       - tenkuro-backend
-    ports:
-      - "8080:8080"
 
 volumes:
   tenkuro-postgres_data:
+  tenkuro-redis_data:
 
 networks:
   tenkuro-backend:
